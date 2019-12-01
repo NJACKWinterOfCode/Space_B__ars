@@ -14,7 +14,9 @@ import pygame, sys, time
 from pygame.locals import *
 pygame.init()
 
-
+pygame.mixer.init()
+pygame.mixer.music.load("BackgroundMusic.mp3") 
+pygame.mixer.music.play(-1,0.0)
 
 
 
