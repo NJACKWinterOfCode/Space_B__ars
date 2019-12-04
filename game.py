@@ -17,10 +17,13 @@ pygame.init()
 
 
 
-
 #variable definitions
 file = './assets/sounds/click_sound.mp3'
 pygame.mixer.music.load(file)
+pygame.mixer.music.play(-1,0.0)
+file = './assets/sounds/Stuff.mp3'
+pygame.mixer.music.load(file)
+pygame.mixer.music.play(-1,0.0)
                 
 keyb_scaling_y=2.4
 keyb_scaling_x=1.1
