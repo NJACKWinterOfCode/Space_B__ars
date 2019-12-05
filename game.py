@@ -12,15 +12,17 @@ import variables
 from background import Background
 import pygame, sys, time
 from pygame.locals import *
+
+
+pygame.mixer.pre_init(44100, -16, 1, 512)
 pygame.init()
 
-
-
-
+pygame.mixer.music.load("./assets/sounds/Bossa-nova-beat-music-loop.wav")
+pygame.mixer.music.play(-1,0.0)
 
 #variable definitions
-file = './assets/sounds/click_sound.mp3'
-pygame.mixer.music.load(file)
+file = './assets/sounds/click_sound.wav'
+space_click_sound = pygame.mixer.Sound(file)
                 
 keyb_scaling_y=2.4
 keyb_scaling_x=1.1
@@ -70,6 +72,7 @@ def update_marquee(cap_char, screen):
                 list_of_chars.append(char_text.char_text(gc(cap_char)))
                 
 def game():
+
     global slow_count, slow_flag,dirn_change_counter, dirn_change, speed, gameplay, split_mode_on, split_mode_counter, save_counter, save_state, slow_start, slow_used, str_to_disp, shield_start, shield_used, shield_flag, shield_count
     #Uncomment below code to put image ingame apart from main menu
     #BackGround = Background('./assets/images/background_image_ingame.jpg', [0,0])
@@ -98,7 +101,7 @@ def game():
         if event.type == pygame.QUIT:
             exit()
         if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE :
-            pygame.mixer.music.play()
+            space_click_sound.play()
 
     # Feed it with events every frame
     ret_status=textinput.update(events, captured_char, list_of_chars, variables.screen_max_x, variables.screen_max_y, split_mode_on)
@@ -232,7 +235,7 @@ def show_menu():
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
                 new_game=not new_game
-                pygame.mixer.music.play()
+                space_click_sound.play()
             
             elif event.key==pygame.K_RETURN:
                 if new_game:
@@ -298,5 +301,6 @@ gameplay=False
 while True:
     if gameplay:
         game()
+
     else:
         show_menu()
