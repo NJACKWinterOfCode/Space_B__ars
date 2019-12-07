@@ -19,6 +19,8 @@ def givechar(cap_char) :
 	com_4=['s','h','i','e','l','d']
 
 	com_5=['b','c','f','g','i','j','k','m','n','p','q','r','u','y','z']
+
+	com_6=['p','a','u','s','e']
  
 	space=[' ']*20
 
@@ -34,6 +36,7 @@ def givechar(cap_char) :
 		search.extend(space)
 		search.extend(com_4)
 		search.extend(com_5)
+		search.extend(com_6)
 		ch=random.choice(search)
 		
 		return ch
@@ -50,6 +53,7 @@ def givechar(cap_char) :
 		search.extend(com_4)
 		search.extend(space)
 		search.extend(com_5)
+		search.extend(com_6)
 		ch=random.choice(search)
 		
 		return ch
@@ -64,6 +68,7 @@ def givechar(cap_char) :
 		search.extend(com_4)
 		search.extend(com_5)
 		search.extend(com_3)
+		search.extend(com_6)
 		search.extend(space)
 		ch=random.choice(search)
 		
