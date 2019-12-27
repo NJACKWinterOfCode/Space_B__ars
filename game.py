@@ -18,7 +18,7 @@ pygame.init()
 
 
 #variable definitions
-file = './assets/sounds/Stuff.mp3'
+file = './assets/sounds/background music.mp3'
 pygame.mixer.music.load(file)
 pygame.mixer.music.play(-1,0.0)
                 
