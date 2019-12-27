@@ -17,14 +17,15 @@ pygame.init()
 
 
 
-
 #variable definitions
-file = './assets/sounds/click_sound.mp3'
+file = './assets/sounds/background music.mp3'
 pygame.mixer.music.load(file)
+pygame.mixer.music.play(-1,0.0)
                 
 keyb_scaling_y=2.4
 keyb_scaling_x=1.1
 slow_count=0
+pause_count=0
 new_game=False
 save_state=False
 save_counter=0
@@ -37,6 +38,8 @@ split_mode_counter=0
 slow_used=False
 shield_used = False
 slow_start=0
+pause_used=False
+pause_start=0
 str_to_disp=''
 game_start=True
 
@@ -70,7 +73,7 @@ def update_marquee(cap_char, screen):
                 list_of_chars.append(char_text.char_text(gc(cap_char)))
                 
 def game():
-    global slow_count, slow_flag,dirn_change_counter, dirn_change, speed, gameplay, split_mode_on, split_mode_counter, save_counter, save_state, slow_start, slow_used, str_to_disp, shield_start, shield_used, shield_flag, shield_count
+    global slow_count, slow_flag, pause_count, pause_flag, dirn_change_counter, dirn_change, speed, gameplay, split_mode_on, split_mode_counter, save_counter, save_state, slow_start, slow_used, pause_start, pause_used, str_to_disp, shield_start, shield_used, shield_flag, shield_count
     #Uncomment below code to put image ingame apart from main menu
     #BackGround = Background('./assets/images/background_image_ingame.jpg', [0,0])
     #screen.fill([255, 255, 255])
@@ -132,6 +135,20 @@ def game():
             else:
                 print("Can't save")
                 str_to_disp="Game Cannot be saved"
+        elif textinput.get_text() == "pause":
+            if not pause_used:
+                if not pause_flag:
+                    print("paused")
+                    speed=0
+                    pause_flag=True
+                    pause_count=pygame.time.get_ticks()
+                    pause_start=slow_count
+                    pause_used=True
+                    print("block pause")
+                    str_to_disp="Paused!!"
+            else:
+                print("Can't use pause")
+                str_to_disp="Can't pause right now"
         elif (textinput.get_text() == "shield"):
             if not shield_used:
                 if not shield_flag:
@@ -156,7 +173,7 @@ def game():
     elif 12000<pygame.time.get_ticks()<=16000:
         str_to_disp="Command + Enter = Magic!!"
     elif 16000<pygame.time.get_ticks()<=20000:
-        str_to_disp="Use command for everything( yes, even save, reverse, slow )"
+        str_to_disp="Use command for everything( yes, even save, reverse, slow, pause)"
     elif 20000<pygame.time.get_ticks()<=22000:
         str_to_disp="Rem : 1+1=0"
     elif 22000<pygame.time.get_ticks()<=24000:
@@ -168,6 +185,12 @@ def game():
             slow_flag=False
             slow_count=0
             speed=30
+    if pause_flag:
+        if abs(pygame.time.get_ticks()-pause_count)>=10000:
+            print("pause over")
+            str_to_disp="Pause over"
+            pause_flag=False
+            pause_count=0a
     if shield_flag:
     	if abs(pygame.time.get_ticks()-shield_count)>=10000:
     		print("protection over")
@@ -180,6 +203,12 @@ def game():
             slow_start=0
             print("Allowed to use slow")
             str_to_disp="Allowed to use slow"
+    if pause_used:
+        if abs(pygame.time.get_ticks()-pause_start)>=60000:
+            pause_used=not pause_used
+            pause_start=0
+            print("Allowed to use pause")
+            str_to_disp="Allowed to use pause"
     if shield_used:
     	if abs(pygame.time.get_ticks()-shield_start)>=90000:
     		shield_used = not shield_used
@@ -293,6 +322,7 @@ else:
     screen.blit(selector, (3*variables.screen_max_x//4,variables.screen_max_y//2-variables.screen_max_y//70))
 
 slow_flag=False
+pause_flag=False
 shield_flag = False
 gameplay=False
 while True:
